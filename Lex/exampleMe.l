@@ -12,5 +12,6 @@ mainprog|var|array|of|function|procedure|begin|end|if|then|else|nop|while|return
 \n				printf("Enter\n");
 \t				printf("Tab\n");
 [ \t]+				printf("WhiteSpace\n");
-"/*"([^*]|\*+[^*/])*\*+"/"	printf("Comment\n");
+"/*"([^*]|\*+[^*/])*\*+"/"	printf("Comment like /**/\n");
+"//".*				printf("Comment like /\n");
 %%
