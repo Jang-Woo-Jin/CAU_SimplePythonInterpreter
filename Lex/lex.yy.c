@@ -661,57 +661,57 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 6 "exampleMe.l"
-printf("Reserved\n");
+printf("Reserved");	//Reserved Word
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 7 "exampleMe.l"
-printf("ID\n");
+printf("ID");		// ID
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 8 "exampleMe.l"
-printf("Integer\n");
+printf("Integer");	// Integer
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 9 "exampleMe.l"
-printf("Float\n");
+printf("Float");	// Float
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 10 "exampleMe.l"
-printf("Operator\n");		
+printf("Operator");	// Operator	
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 11 "exampleMe.l"
-printf("Delimiter\n");
+printf("Delimiter");	// Delimiter
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 12 "exampleMe.l"
-printf("Enter\n");
+printf("\n");		// Enter
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 13 "exampleMe.l"
-printf("Tab\n");
+printf("\t");		// Tab
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 14 "exampleMe.l"
-printf("WhiteSpace\n");
+printf(" ");		// Space bar
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 15 "exampleMe.l"
-printf("Comment like /**/\n");
+printf("Comment like /**/");	//Comment
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 16 "exampleMe.l"
-printf("Comment like /\n");
+printf("Comment like //");	//Comment
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
