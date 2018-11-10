@@ -1,5 +1,6 @@
 %{
 #include<stdio.h>
+#include<string.h>
 #include "ourFlex.tab.h"
 
 void yyerror(const char *str){
@@ -9,13 +10,24 @@ void yyerror(const char *str){
 int yywrap(){
 	return 1;
 }
-
 main(){
 	yyparse();
 }
 %}
 
-%token ReservedWord ID Int Float Operator Delimiter
+
+
+
+%token ReservedWord
+%token ID
+%token Int
+%token Float
+%token Operator
+%token Delimiter
+
+
+%left '+' '-'
+%left '*' '/'
 
 %%
 
@@ -26,31 +38,31 @@ Identifies: /*empty*/
 Identify:
 	ReservedWord
 	{
-		printf("\tFlex returned ReservedWord\n");
+		printf("\tFlex returned ReservedWord : %s\n",$1);
 	}
 	|
 	ID
 	{
-		printf("\tFlex returned ID\n");
+		printf("\tFlex returned ID : %s\n",$1);
 	}
 	|
 	Int
 	{
-		printf("\tFlex returned Int\n");
+		printf("\tFlex returned Int : %d\n",yylval);
 	}
 	|
 	Float
 	{
-		printf("\tFlex returned Float\n");
+		printf("\tFlex returned Float : %f\n",yylval);
 	}
 	|
 	Operator
 	{
-		printf("\tFlex returned Operator\n");
+		printf("\tFlex returned Operator : %s\n",$1);
 	}
 	|
 	Delimiter
 	{
-		printf("\tFlex returned Delimiter\n");
+		printf("\tFlex returned Delimiter : %s\n",$1);
 	}
 	;

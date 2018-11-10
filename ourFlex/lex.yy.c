@@ -420,10 +420,11 @@ static char *yy_last_accepting_cpos;
 char *yytext;
 #line 1 "ourFlex.l"
 #define INITIAL 0
-#line 3 "ourFlex.l"
+#line 2 "ourFlex.l"
 #include<stdio.h>
+#include<string.h>
 #include "ourFlex.tab.h"
-#line 427 "lex.yy.c"
+#line 428 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -574,9 +575,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 6 "ourFlex.l"
+#line 7 "ourFlex.l"
 
-#line 580 "lex.yy.c"
+#line 581 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -661,23 +662,23 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 7 "ourFlex.l"
+#line 8 "ourFlex.l"
 {
-													yylval = *yytext;
+													yylval = (int)strdup(yytext);
 													return ReservedWord;	//Reserved Word
 												}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "ourFlex.l"
+#line 12 "ourFlex.l"
 {
-					yylval = *yytext;
+					yylval = (int)strdup(yytext);
 					return ID;		// ID
 				}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "ourFlex.l"
+#line 16 "ourFlex.l"
 { 
 					yylval = atoi(yytext);
 					return Int;		// Integer
@@ -685,44 +686,44 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 19 "ourFlex.l"
+#line 20 "ourFlex.l"
 {	
-					yylval = atof(yytext);
+					yylval = (float)atof(yytext);
 					return Float;		// Float
 				}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 23 "ourFlex.l"
+#line 24 "ourFlex.l"
 {	
-					yylval = *yytext;
+					yylval = (int)strdup(yytext);
 					return Operator;	// Operator
 				}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 27 "ourFlex.l"
+#line 28 "ourFlex.l"
 {	
-					yylval = *yytext;
+					yylval = (int)strdup(yytext);
 					return Delimiter;	// Delimiter
 				}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "ourFlex.l"
+#line 32 "ourFlex.l"
 ;// WhiteSpace
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 32 "ourFlex.l"
+#line 33 "ourFlex.l"
 ;// WhiteSpace - Comment
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 33 "ourFlex.l"
+#line 34 "ourFlex.l"
 ECHO;
 	YY_BREAK
-#line 726 "lex.yy.c"
+#line 727 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1608,4 +1609,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 33 "ourFlex.l"
+#line 34 "ourFlex.l"

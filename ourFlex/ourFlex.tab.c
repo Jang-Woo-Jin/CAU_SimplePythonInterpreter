@@ -71,6 +71,7 @@
 #line 1 "ourFlex.y"
 
 #include<stdio.h>
+#include<string.h>
 #include "ourFlex.tab.h"
 
 void yyerror(const char *str){
@@ -80,7 +81,6 @@ void yyerror(const char *str){
 int yywrap(){
 	return 1;
 }
-
 main(){
 	yyparse();
 }
@@ -355,7 +355,7 @@ union yyalloc
 #define YYLAST   8
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  9
+#define YYNTOKENS  13
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
@@ -377,7 +377,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,    11,     9,     2,    10,     2,    12,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -413,14 +413,14 @@ static const yytype_uint8 yyprhs[] =
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      10,     0,    -1,    -1,    10,    11,    -1,     3,    -1,     4,
+      14,     0,    -1,    -1,    14,    15,    -1,     3,    -1,     4,
       -1,     5,    -1,     6,    -1,     7,    -1,     8,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    22,    22,    23,    27,    32,    37,    42,    47,    52
+       0,    34,    34,    35,    39,    44,    49,    54,    59,    64
 };
 #endif
 
@@ -430,7 +430,8 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "ReservedWord", "ID", "Int", "Float",
-  "Operator", "Delimiter", "$accept", "Identifies", "Identify", 0
+  "Operator", "Delimiter", "'+'", "'-'", "'*'", "'/'", "$accept",
+  "Identifies", "Identify", 0
 };
 #endif
 
@@ -439,14 +440,15 @@ static const char *const yytname[] =
    token YYLEX-NUM.  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262,   263
+       0,   256,   257,   258,   259,   260,   261,   262,   263,    43,
+      45,    42,    47
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     9,    10,    10,    11,    11,    11,    11,    11,    11
+       0,    13,    14,    14,    15,    15,    15,    15,    15,    15
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -502,7 +504,7 @@ static const yytype_int8 yycheck[] =
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    10,     0,     3,     4,     5,     6,     7,     8,    11
+       0,    14,     0,     3,     4,     5,     6,     7,     8,    15
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1316,61 +1318,61 @@ yyreduce:
         case 4:
 
 /* Line 1455 of yacc.c  */
-#line 28 "ourFlex.y"
+#line 40 "ourFlex.y"
     {
-		printf("\tFlex returned ReservedWord\n");
+		printf("\tFlex returned ReservedWord : %s\n",(yyvsp[(1) - (1)]));
 	;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 33 "ourFlex.y"
+#line 45 "ourFlex.y"
     {
-		printf("\tFlex returned ID\n");
+		printf("\tFlex returned ID : %s\n",(yyvsp[(1) - (1)]));
 	;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 38 "ourFlex.y"
+#line 50 "ourFlex.y"
     {
-		printf("\tFlex returned Int\n");
+		printf("\tFlex returned Int : %d\n",yylval);
 	;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 43 "ourFlex.y"
+#line 55 "ourFlex.y"
     {
-		printf("\tFlex returned Float\n");
+		printf("\tFlex returned Float : %f\n",yylval);
 	;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 48 "ourFlex.y"
+#line 60 "ourFlex.y"
     {
-		printf("\tFlex returned Operator\n");
+		printf("\tFlex returned Operator : %s\n",(yyvsp[(1) - (1)]));
 	;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 53 "ourFlex.y"
+#line 65 "ourFlex.y"
     {
-		printf("\tFlex returned Delimiter\n");
+		printf("\tFlex returned Delimiter : %s\n",(yyvsp[(1) - (1)]));
 	;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1374 "ourFlex.tab.c"
+#line 1376 "ourFlex.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
