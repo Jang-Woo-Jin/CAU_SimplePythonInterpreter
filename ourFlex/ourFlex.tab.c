@@ -68,7 +68,7 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 189 of yacc.c  */
-#line 1 "ourFlex.y"
+#line 1 ".\\ourFlex.y"
 
 #include<stdio.h>
 #include<string.h>
@@ -1318,7 +1318,7 @@ yyreduce:
         case 4:
 
 /* Line 1455 of yacc.c  */
-#line 40 "ourFlex.y"
+#line 40 ".\\ourFlex.y"
     {
 		printf("\tFlex returned ReservedWord : %s\n",(yyvsp[(1) - (1)]));
 	;}
@@ -1327,7 +1327,7 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 45 "ourFlex.y"
+#line 45 ".\\ourFlex.y"
     {
 		printf("\tFlex returned ID : %s\n",(yyvsp[(1) - (1)]));
 	;}
@@ -1336,7 +1336,7 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 50 "ourFlex.y"
+#line 50 ".\\ourFlex.y"
     {
 		printf("\tFlex returned Int : %d\n",yylval);
 	;}
@@ -1345,16 +1345,16 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 55 "ourFlex.y"
+#line 55 ".\\ourFlex.y"
     {
-		printf("\tFlex returned Float : %f\n",yylval);
+		printf("\tFlex returned Float : %s\n",(yyvsp[(1) - (1)]));
 	;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 60 "ourFlex.y"
+#line 60 ".\\ourFlex.y"
     {
 		printf("\tFlex returned Operator : %s\n",(yyvsp[(1) - (1)]));
 	;}
@@ -1363,7 +1363,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 65 "ourFlex.y"
+#line 65 ".\\ourFlex.y"
     {
 		printf("\tFlex returned Delimiter : %s\n",(yyvsp[(1) - (1)]));
 	;}

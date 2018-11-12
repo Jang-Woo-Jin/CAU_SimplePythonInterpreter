@@ -18,7 +18,7 @@ mainprog|var|array|of|function|procedure|begin|end|if|then|else|nop|while|return
 					return Int;		// Integer
 				}
 [0-9]+"."[0-9]+			{	
-					yylval = (float)atof(yytext);
+					yylval = (int)strdup(yytext);
 					return Float;		// Float
 				}
 [-+*/<>!]|<=|>=|==|!=		{	
@@ -29,6 +29,6 @@ mainprog|var|array|of|function|procedure|begin|end|if|then|else|nop|while|return
 					yylval = (int)strdup(yytext);
 					return Delimiter;	// Delimiter
 				}
-\n|\t|[ \t]+					;// WhiteSpace
+[\n]*|\t|[ \t]+					;// WhiteSpace
 "/*"([^*]|\*+[^*/])*\*+"/"|"//".*|"#".*		;// WhiteSpace - Comment
 %%
