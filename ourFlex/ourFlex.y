@@ -53,7 +53,7 @@ Identify:
 	|
 	Float
 	{
-		printf("\tFlex returned Float : %f\n",yylval);
+		printf("\tFlex returned Float : %s\n",$1);
 	}
 	|
 	Operator
