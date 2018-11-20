@@ -2,29 +2,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "ourFlex.tab.h"
+#include "sub_grammar.tab.h"
+
+
+%token INTEGER
+%token FLOAT
 %}
 
-%token MAINPROG
-%token VAR
-%token ARRAY
-%token OF
-%token FUNCTION
-%token PROCEDURE
-%token BEGIN
-%token END
-%token IF
-%token THEN
-%token ELSE
-%token NOP
-%token WHILE
-%token RETURN
-%token PRINT
-%token ID
-%token INT
-%token FLOAT
-%token OPERATOR
-%token DELIMITER
 
 %left '+' '-'
 %left '*' '/'
@@ -32,14 +16,35 @@
 %%
 term:
         factor
-        | factor multop term
+        | factor multop term 
+	{
+		if($2 == '*'){
+			printf("*연산 실행");
+				$$ = $1 * $3;
+		}
+		else{
+			printf("/연산 실행");
+			$$ = $1 / $3;
+		}
+	}
         ;
 
 factor:
-        INTEGER 
-        | FLOAT
-        | '!' factor
-        | sign factor
+        INTEGER 	{$$=$1;}
+        | FLOAT	{$$=$1;}
+        | '!' factor	{$$=!$2;}
+        | sign factor	
+	{
+		if($1 == '+'){
+			printf("+연산 실행");	
+			$$ = $2;
+		}
+		else{
+			printf("-연산 실행");
+			$$ = $2 * (-1);
+		}
+	}
+
         ;
 
 sign:

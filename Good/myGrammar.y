@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "ourFlex.tab.h"
+#include "myGrammar.tab.h"
 
 void yyerror(const char *str){
 	fprintf(stderr,"err : %s\n",str);
@@ -22,7 +22,7 @@ main(){
 %token OF
 %token FUNCTION
 %token PROCEDURE
-%token BEGIN
+%token BEG
 %token END
 %token IF
 %token THEN
@@ -32,7 +32,7 @@ main(){
 %token RETURN
 %token PRINT
 %token ID
-%token INT
+%token INTEGER
 %token FLOAT
 %token OPERATOR
 %token DELIMITER
@@ -61,7 +61,7 @@ type:
         ;
 
 standard_type:
-        INT
+        INTEGER
         | FLOAT
         ;
 
@@ -90,7 +90,7 @@ parameter_list:
         ;
 
 compund_statement:
-        BEGIN statement_list END
+        BEG statement_list END
         ;
 
 statement_list:
@@ -99,7 +99,11 @@ statement_list:
         ;
 
 statement:
-        ELSE statement
+        variable '=' expression
+        | print_statement
+        | procedure_statement
+        | compund_statement
+        | IF expression THEN statement ELSE statement
         | WHILE '(' expression ')' statement
         | RETURN expression
         | NOP
@@ -175,6 +179,13 @@ addop:
 multop:
         '*'
         | '/'
+        ;
+
+epsilon: 
+        ;
+
+num:
+        INTEGER
         ;
 %%
 
