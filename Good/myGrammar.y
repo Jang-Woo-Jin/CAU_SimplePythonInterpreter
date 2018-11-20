@@ -36,6 +36,8 @@ main(){
 %token FLOAT
 %token OPERATOR
 %token DELIMITER
+%token I_VALUE
+%token F_VALUE
 
 %left '+' '-'
 %left '*' '/'
@@ -43,6 +45,8 @@ main(){
 %%
 program: 
         MAINPROG ID ';' declarations subprogram_declarations compund_statement
+        |program epsilon
+        | epsilon {printf("end");}
         ;
 
 declarations:
@@ -149,8 +153,8 @@ term:
         ;
 
 factor:
-        INTEGER
-        | FLOAT
+        I_VALUE
+        | F_VALUE
         | variable
         | procedure_statement
         | '!' factor
@@ -181,11 +185,11 @@ multop:
         | '/'
         ;
 
-epsilon: 
+epsilon: '~' 
         ;
 
 num:
-        INTEGER
+        I_VALUE
         ;
 %%
 

@@ -20,6 +20,8 @@
 "while"				{return WHILE;}
 "return"			{return RETURN;}
 "print"				{return PRINT;}
+"int"				{return INTEGER;}
+"float"				{return FLOAT;}
 
 [a-zA-Z][a-zA-Z0-9]*		{
 					yylval = (int)strdup(yytext);
@@ -33,14 +35,20 @@
 					yylval = (int)strdup(yytext);
 					return FLOAT;		// Float
 				}
-[-+*/<>!]|<=|>=|==|!=		{	
-					yylval = (int)strdup(yytext);
-					return OPERATOR;	// Operator
+[-+*/<>!] 		{return *yytext;}
+"<="|">="|"=="|"!="		{	
+					return *yytext;
+					//yylval = (int)strdup(yytext);
+					//return OPERATOR;	// Operator
+				}	
+[;.,=():]		{return *yytext;}
+"\["|"\]"		{	
+					return *yytext;
+					// yylval = (int)strdup(yytext);
+					// return DELIMITER;	// Delimiter
 				}
-[;.,=():]|\[|\]		{	
-					yylval = (int)strdup(yytext);
-					return DELIMITER;	// Delimiter
-				}
+					
+"~"			{return *yytext;}
 [\n]*|\t|[ ][\t ]*				;// WhiteSpace
 "/*"([^*]|\*+[^*/])*\*+"/"|"//".*|"#".*		;// WhiteSpace - Comment
 %%
