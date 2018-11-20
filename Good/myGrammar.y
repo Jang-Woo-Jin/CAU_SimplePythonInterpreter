@@ -45,8 +45,8 @@ main(){
 %%
 program: 
         |
-        | program MAINPROG ID ; declarations subprogram_declarations compund_statement
-        | MAINPROG ID ';' declarations subprogram_declarations compund_statement
+        | program MAINPROG ID ';' declarations subprogram_declaration compound_statement
+        | MAINPROG ID ';' declarations subprogram_declarations compound_statement
         ;
 
 declarations:
@@ -75,7 +75,7 @@ subprogram_declarations:
         ;
 
 subprogram_declaration:
-        subprogram_head declarations compund_statement
+        subprogram_head declarations compound_statement
         ;
 
 subprogram_head:
@@ -93,7 +93,7 @@ parameter_list:
         | identifier_list ':' type ';' parameter_list
         ;
 
-compund_statement:
+compound_statement:
         BEG statement_list END
         ;
 
@@ -106,7 +106,7 @@ statement:
         variable '=' expression
         | print_statement
         | procedure_statement
-        | compund_statement
+        | compound_statement
         | IF expression THEN statement ELSE statement
         | WHILE '(' expression ')' statement
         | RETURN expression
