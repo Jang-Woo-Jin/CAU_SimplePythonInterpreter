@@ -44,8 +44,7 @@ main(){
 
 %%
 program: 
-        |
-        | program MAINPROG ID ';' declarations subprogram_declaration compound_statement
+        program MAINPROG ID ';' declarations subprogram_declaration compound_statement
         | MAINPROG ID ';' declarations subprogram_declarations compound_statement
         ;
 
