@@ -1,7 +1,7 @@
 %{
 #include<stdio.h>
 #include<string.h>
-#include "myGrammar.tab.h"
+#include "newTest.tab.h"
 %}
 
 %%

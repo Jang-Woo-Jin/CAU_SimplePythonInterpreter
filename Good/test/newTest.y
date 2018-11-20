@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "myGrammar.tab.h"
+#include "newTest.tab.h"
 
 void yyerror(const char *str){
 	fprintf(stderr,"err : %s\n",str);
