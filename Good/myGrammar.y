@@ -34,6 +34,8 @@ main(){
 %token ID
 %token INTEGER
 %token FLOAT
+%token I_VALUE
+%token F_VALUE
 %token OPERATOR
 %token DELIMITER
 
@@ -42,7 +44,9 @@ main(){
 
 %%
 program: 
-        MAINPROG ID ';' declarations subprogram_declarations compund_statement
+        |
+        | program declarations
+        | MAINPROG ID ';' declarations subprogram_declarations compund_statement
         ;
 
 declarations:
@@ -149,8 +153,10 @@ term:
         ;
 
 factor:
-        INTEGER
-        | FLOAT
+        I_VALUE {
+                printf("\tFlex returned Int : %d\n",yylval);
+        }
+        | F_VALUE
         | variable
         | procedure_statement
         | '!' factor
@@ -181,12 +187,17 @@ multop:
         | '/'
         ;
 
-epsilon: 
+epsilon: '~' { printf("epsilon\n");}
         ;
 
 num:
-        INTEGER
+        I_VALUE
+	{
+		printf("%d",yyval*yyval);
+		printf("\tFlex returned Int : %d\n",yylval);
+	}
         ;
+
 %%
 
 

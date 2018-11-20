@@ -57,8 +57,10 @@
      ID = 273,
      INTEGER = 274,
      FLOAT = 275,
-     OPERATOR = 276,
-     DELIMITER = 277
+     I_VALUE = 276,
+     F_VALUE = 277,
+     OPERATOR = 278,
+     DELIMITER = 279
    };
 #endif
 
