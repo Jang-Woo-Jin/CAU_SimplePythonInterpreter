@@ -38,6 +38,12 @@ Identifies: /*empty*/
 Identify:
 	ReservedWord
 	{
+		if(!strcmp($1, "then")){
+			printf("then");
+		}
+		else if($0 == "then"){
+			printf("then");
+		}
 		printf("\tFlex returned ReservedWord : %s\n",$1);
 	}
 	|
@@ -48,6 +54,7 @@ Identify:
 	|
 	Int
 	{
+		printf("%d",yyval*yyval);
 		printf("\tFlex returned Int : %d\n",yylval);
 	}
 	|
