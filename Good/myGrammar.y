@@ -45,7 +45,7 @@ main(){
 %%
 program: 
         |
-        | program declarations
+        | program MAINPROG ID ; declarations subprogram_declarations compund_statement
         | MAINPROG ID ';' declarations subprogram_declarations compund_statement
         ;
 
