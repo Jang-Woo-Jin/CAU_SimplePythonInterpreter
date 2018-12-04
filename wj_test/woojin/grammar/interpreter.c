@@ -258,6 +258,9 @@ float eval(struct ast *a) {
 		case 'M': 
 			v = -eval(a->l); 
 			break;
+		case '!':
+			v = !eval(a->l);
+			break;
 		/* comparisons */
 		case '1': 
 			v = (eval(a->l) > eval(a->r))? 1 : 0; 

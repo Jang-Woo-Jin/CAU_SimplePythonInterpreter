@@ -66,8 +66,7 @@
      OPERATOR = 282,
      DELIMITER = 283,
      CMP = 284,
-     UMINUS = 285,
-     UPLUS = 286
+     UMINUS = 285
    };
 #endif
 
@@ -89,7 +88,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 93 "test.tab.h"
+#line 92 "test.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
