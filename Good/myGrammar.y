@@ -188,15 +188,6 @@ multop:
 
 epsilon: '~' { printf("epsilon\n");}
         ;
-
-num:
-        I_VALUE
-	{
-		printf("%d",yyval*yyval);
-		printf("\tFlex returned Int : %d\n",yylval);
-	}
-        ;
-
 %%
 
 

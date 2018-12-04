@@ -3,8 +3,8 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include "myGrammar.h"
-#include "myGrammar.tab.h"
+#include "test.h"
+#include "test.tab.h"
 %}
 
 %%
@@ -22,16 +22,17 @@
 "nop"				{ return NOP; }
 "while"				{ return WHILE; }
 "return"			{ return RETURN; }
-"print"				{ return PRINT; }
 "int"				{ return INTEGER; }
 "float"				{ return FLOAT; }
 
+"print"				{ yylval.fn = B_print; return PRINT; }
+
 [a-zA-Z][a-zA-Z0-9]*	{
-				   			yylval.c_value = *yytext - 'a';
+				   			yylval.s_value = lookup(yytext);
 							return ID;		// ID
 						}
 [0-9]+				{ 
-						yylval.i_value = atoi(yytext);
+						yylval.f_value = atoi(yytext);
 						return I_VALUE;		// Integer
 					}	
 [0-9]+"."[0-9]+		{	
@@ -41,18 +42,17 @@
 						return F_VALUE;		// Float
 					}
 
-[-+*/<>!~]			{ 
-						yylval.c_value = *yytext;
-						return *yytext; 
-					}
+[-+*/!~]			{ return yytext[0]; }
 
-">="        		{ return GE; }
-"<="        		{ return LE; }
-"=="        		{ return EQ; }
-"!="        		{ return NE; }
-
-[;.,=():]|\[|\]		{ return *yytext; }
-					
+[;.,=(){}:]|\[|\]		{ return yytext[0]; }
+	
+">" 				{ yylval.fn = 1; return CMP; }
+"<" 				{ yylval.fn = 2; return CMP; }
+"!=" 				{ yylval.fn = 3; return CMP; }
+"==" 				{ yylval.fn = 4; return CMP; }
+">=" 				{ yylval.fn = 5; return CMP; }
+"<=" 				{ yylval.fn = 6; return CMP; }
+				
 [\n]*|\t|[ ][\t ]*			;// WhiteSpace
 "/*"([^*]|\*+[^*/])*\*+"/"|"//".*|"#".*		;// WhiteSpace - Comment
 %%

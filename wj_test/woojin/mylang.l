@@ -1,5 +1,6 @@
 %{
 #include <stdlib.h>
+#include "mylang.h"
 #include "mylang.tab.h"
 
 void yyerror(char *);

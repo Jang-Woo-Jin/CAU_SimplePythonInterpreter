@@ -1,54 +1,19 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <stdarg.h>
+  #include "mylang.h"
 
-typedef enum {
-  typeCon,
-  typeId,
-  typeOpr
-} nodeEnum;
+  /* Prototypes */
+  nodeType *opr(int oper, int nops, ...);
+  nodeType *id(int i);
+  nodeType *con(int value);
+  void freeNode(nodeType *p);
+  int ex(nodeType *p);
+  int yylex(void);
+  void yyerror(char *);
 
-/* Constants */
-typedef struct {
-  int value;
-} conNodeType;
-
-/* Identifiers */
-typedef struct {
-  int i;
-} idNodeType;
-
-/* Operators */
-typedef struct {
-  int oper;                /* Operator */
-  int nops;                /* Number of operants */
-  struct nodeTypeTag **op; /* Operands */
-} oprNodeType;
-
-typedef struct nodeTypeTag {
-  nodeEnum type;           /* Type of node */
-
-  union {
-    conNodeType con; /* Constants */
-    idNodeType  id;  /* Identifiers */
-    oprNodeType opr; /* Operators */
-  };
-} nodeType;
-
-extern int sym[26];
-
-
-/* Prototypes */
-nodeType *opr(int oper, int nops, ...);
-nodeType *id(int i);
-nodeType *con(int value);
-void freeNode(nodeType *p);
-int ex(nodeType *p);
-int yylex(void);
-void yyerror(char *);
-
-int sym[26];
+  int sym[26];
 %}
 
 %union {
@@ -181,11 +146,6 @@ void freeNode(nodeType *p) {
   free(p);
 }
 
-void yyerror(char *s)
-{
-  fprintf(stderr, "%s\n", s);
-}
-
 int ex(nodeType *p) {
   int tmp;
 
@@ -243,10 +203,15 @@ int ex(nodeType *p) {
   return 0;
 }
 
+void yyerror(char *s)
+{
+  fprintf(stderr, "%s\n", s);
+}
 
-
+//extern int yy_flex_debug;
 int main(int argc, char *argv[])
 {
+  //yy_flex_debug = 1;
   yyparse();
   return 0;
 }

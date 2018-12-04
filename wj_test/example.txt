@@ -1,0 +1,27 @@
+mainprog test1;
+var id1; id2; id3 : int;
+var aid : array[5] of int;
+~
+procedure minFunc(a:int; b:int);
+var a1 : int;
+var b1 : int;
+~
+begin 
+    print(a+b) 
+    return a+b
+end
+
+function sumFunc (a:int; b:int) : int;
+var a1 : int;
+var b1 : int;
+~
+begin 
+    print(a+b) ;
+    return a+b
+end
+~
+begin
+    a = 2;
+    b = 3;
+    print(a+b)
+end
