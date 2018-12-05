@@ -26,7 +26,7 @@
 %token OPERATOR DELIMITER
 
 
-%type <a> compound_statement expression_list simple_expression expression statement_list statement variable term factor 
+%type <a> compound_statement print_statement expression_list simple_expression expression statement_list statement variable term factor 
 
 %left GE LE EQ NE //'>' '<'
 %right '='
@@ -56,11 +56,15 @@ statement_list:
          ;
 
 statement:
-    expression                 	        	{ $$ = $1;              }
-    | PRINT expression                 		{ $$ = newfunc($1, $2); }
+    expression                 	        	{ $$ = $1; }
+    | print_statement    		              { $$ = $1; }
     | variable '=' expression      			  { $$ = newasgn((struct symref*)$1, $3); }
     | WHILE '(' expression ')' statement              { $$ = newflow('W', $3, $5, NULL);  }
     | IF  expression THEN statement ELSE statement  { $$ = newflow('I', $2, $4, $6);      }
+    ;
+print_statement:
+    PRINT   { $$ = newfunc($1, NULL); }
+    | PRINT expression    { $$ = newfunc($1, $2); }
     ;
 
 variable:
