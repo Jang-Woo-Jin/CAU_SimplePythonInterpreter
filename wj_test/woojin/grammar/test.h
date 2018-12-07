@@ -35,6 +35,7 @@ struct symlist {
  * S list of symbols
  * F built in function call
  * C user function call
+ * X no operation
  */
 enum bifs { /* built-in functions */
  B_print = 1,

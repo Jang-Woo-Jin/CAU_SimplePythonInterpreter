@@ -50,6 +50,10 @@ struct ast *newast(int nodetype, struct ast *l, struct ast *r) {
 	return a;
 }
 
+struct ast *newnop(){
+
+}
+
 struct ast *newnum(float d) {
 	struct numval *a = malloc(sizeof(struct numval));
 
@@ -162,7 +166,7 @@ void treefree(struct ast *a) {
 		case 'M': case 'C': case 'F':
 			treefree(a->l);
 		/* no subtree */
-		case 'K': case 'N':
+		case 'K': case 'N': case 'X':
 			break;
 		
 		case '=':
@@ -238,6 +242,11 @@ float eval(struct ast *a) {
 		/* assignment */
 		case '=': 
 			v = ((struct symasgn *)a)->s->value = eval(((struct symasgn *)a)->v);
+			break;
+		/* no operation*/
+		case 'X':
+			v = 0.0;
+			//do nothing
 			break;
 		/* expressions */
 		case '+': 

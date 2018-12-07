@@ -26,7 +26,7 @@
 %token OPERATOR DELIMITER
 
 
-%type <a> compound_statement print_statement expression_list simple_expression expression statement_list statement variable term factor 
+%type <a> compound_statement procedure_statement actural_parameter_expression print_statement expression_list simple_expression expression statement_list statement variable term factor 
 
 %left GE LE EQ NE //'>' '<'
 %right '='
@@ -57,10 +57,13 @@ statement_list:
 
 statement:
     expression                 	        	{ $$ = $1; }
-    | print_statement    		              { $$ = $1; }
-    | variable '=' expression      			  { $$ = newasgn((struct symref*)$1, $3); }
-    | WHILE '(' expression ')' statement              { $$ = newflow('W', $3, $5, NULL);  }
-    | IF  expression THEN statement ELSE statement  { $$ = newflow('I', $2, $4, $6);      }
+    | print_statement    		        { $$ = $1; }
+    | procedure_statement                  	{ $$ = $1; }
+    | compound_statement                        { $$ = $1; }
+    | variable '=' expression      	        { $$ = newasgn((struct symref*)$1, $3); }
+    | WHILE '(' expression ')' statement            { $$ = newflow('W', $3, $5, NULL);  }
+    | IF  expression THEN statement ELSE statement  { $$ = newflow('I', $2, $4, $6);    }
+    | NOP                                       { $$ = newast('X', NULL, NULL); }
     ;
 print_statement:
     PRINT   { $$ = newfunc($1, NULL); }
@@ -71,7 +74,14 @@ variable:
         ID	{ $$ = newref($1); }
         | ID '[' expression ']'
         ;
+procedure_statement:
+        ID '(' actural_parameter_expression ')'     { $$ = newcall($1, $3); }
+        ;
 
+actural_parameter_expression:
+        epsilon
+        | expression_list    { $$ = $1; }   
+        ;
 expression_list:
         expression  { $$ = $1; }
         | expression ';' expression_list    { $$ = newast('L',$1,$3);  }
@@ -96,12 +106,13 @@ term:
 
 factor:
     I_VALUE                         { $$ = newnum($1); }
-	  | F_VALUE							          { $$ = newnum($1); }
+    | F_VALUE			    { $$ = newnum($1); }
     | variable                      { $$ = $1; }
     | '-' expression %prec UMINUS   { $$ = newast('M', $2, NULL);  }
-    | '!' factor                      { $$ = newast('!', $2, NULL);  }
+    | '!' factor                    { $$ = newast('!', $2, NULL);  }
     ;
-
+epsilon:
+        ;
 
 %%
 
