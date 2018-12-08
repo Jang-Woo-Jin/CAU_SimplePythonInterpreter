@@ -50,14 +50,14 @@ struct ast *newast(int nodetype, struct ast *l, struct ast *r) {
 	return a;
 }
 
-struct ast *newnum(float d) {
+struct ast *newnum(float d, int type) {
 	struct numval *a = malloc(sizeof(struct numval));
 
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
 	}
-	
+	a->type = type;
 	a->nodetype = 'K';
 	a->number = d;
 	return (struct ast *)a;
@@ -125,7 +125,10 @@ struct ast *newasgn(struct symref *l, struct ast *v) {
 		yyerror("out of space");
 		exit(0);
 	}
-	
+	if(l->s->type->type != v->type){
+		yyerror("type unmatched");
+		exit(0);
+	}
 	a->nodetype = '=';
 	a->s = l->s;
 	a->v = v;

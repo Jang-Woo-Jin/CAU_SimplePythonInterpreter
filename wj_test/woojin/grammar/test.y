@@ -57,7 +57,7 @@ declarations:
 
 identifier_list:
         ID      { $$ = newfixsymlist((struct symbol*)newref($1),NULL); }
-        | ID ';' identifier_list   { $$ = newfixsymlist($1, $3); }
+        | ID ';' identifier_list   { $$ = newfixsymlist((struct symbol*)newref($1), $3); }
         ;
 
 type:
@@ -132,8 +132,8 @@ term:
         ;
 
 factor:
-    I_VALUE                         { $$ = newnum($1); }
-    | F_VALUE			    { $$ = newnum($1); }
+    I_VALUE                         { $$ = newnum($1, 'I'); }
+    | F_VALUE			    { $$ = newnum($1, 'F'); }
     | variable                      { $$ = $1; }
     | '-' expression %prec UMINUS   { $$ = newast('M', $2, NULL);  }
     | '!' factor                    { $$ = newast('!', $2, NULL);  }

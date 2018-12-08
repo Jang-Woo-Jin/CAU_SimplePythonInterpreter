@@ -1475,7 +1475,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 60 "test.y"
-    { (yyval.s_list) = newfixsymlist((yyvsp[(1) - (3)].s_value), (yyvsp[(3) - (3)].s_list)); ;}
+    { (yyval.s_list) = newfixsymlist((struct symbol*)newref((yyvsp[(1) - (3)].s_value)), (yyvsp[(3) - (3)].s_list)); ;}
     break;
 
   case 11:
@@ -1692,14 +1692,14 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 135 "test.y"
-    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value)); ;}
+    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value), 'I'); ;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
 #line 136 "test.y"
-    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value)); ;}
+    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value), 'F'); ;}
     break;
 
   case 45:

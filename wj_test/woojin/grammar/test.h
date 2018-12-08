@@ -57,6 +57,7 @@ struct ast {
  int nodetype;
  struct ast *l;
  struct ast *r;
+ int type;
 };
 
 struct fncall { /* built-in function */
@@ -79,6 +80,7 @@ struct flow {
 };
 
 struct numval {
+ int type;
  int nodetype; /* type K */
  float number;
 };
@@ -108,7 +110,7 @@ struct ast *newfunc(int functype, struct ast *l);
 struct ast *newcall(struct symbol *s, struct ast *l);
 struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symref *l, struct ast *v);
-struct ast *newnum(float d);
+struct ast *newnum(float d, int type);
 struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
 
 struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next);
