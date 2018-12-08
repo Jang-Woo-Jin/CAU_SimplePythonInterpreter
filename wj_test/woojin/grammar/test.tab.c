@@ -151,12 +151,13 @@ typedef union YYSTYPE
     float f_value;
     struct symbol *s_value; /* which symbol */
     struct symlist *s_list;
+    struct fixsymlist *f_list;
     int fn; /* which function */
 
 
 
 /* Line 214 of yacc.c  */
-#line 160 "test.tab.c"
+#line 161 "test.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -168,7 +169,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 172 "test.tab.c"
+#line 173 "test.tab.c"
 
 #ifdef short
 # undef short
@@ -470,11 +471,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    44,    44,    48,    49,    52,    53,    57,    58,    62,
-      63,    64,    65,    70,    74,    75,    79,    80,    81,    82,
-      83,    84,    85,    86,    89,    90,    94,    95,    98,   102,
-     103,   106,   107,   111,   112,   116,   117,   118,   122,   123,
-     124,   128,   129,   130,   131,   132,   135
+       0,    46,    46,    50,    51,    54,    55,    59,    60,    64,
+      65,    66,    67,    72,    76,    77,    81,    82,    83,    84,
+      85,    86,    87,    88,    91,    92,    96,    97,   100,   104,
+     105,   108,   109,   113,   114,   118,   119,   120,   124,   125,
+     126,   130,   131,   132,   133,   134,   137
 };
 #endif
 
@@ -1432,294 +1433,294 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 44 "test.y"
+#line 46 "test.y"
     { exit(0); ;}
     break;
 
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 48 "test.y"
+#line 50 "test.y"
     { eval((yyvsp[(2) - (3)].a)); eval((yyvsp[(3) - (3)].a)); treefree((yyvsp[(2) - (3)].a)); treefree((yyvsp[(3) - (3)].a)); ;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 52 "test.y"
-    { (yyval.a) = newidentifier((struct fixsymlist*)(yyvsp[(2) - (6)].a), (yyvsp[(4) - (6)].a), (yyvsp[(6) - (6)].a)); ;}
+#line 54 "test.y"
+    { (yyval.a) = newidentifier((struct f_list*)(yyvsp[(2) - (6)].f_list), (yyvsp[(4) - (6)].a), (yyvsp[(6) - (6)].a)); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 53 "test.y"
+#line 55 "test.y"
     { (yyval.a) = newEpsilon(); ;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 57 "test.y"
-    { (yyval.a) = newfixsymlist((struct symbol*)newref((yyvsp[(1) - (1)].s_value)),NULL); ;}
+#line 59 "test.y"
+    { (yyval.f_list) = newfixsymlist((struct symbol*)newref((yyvsp[(1) - (1)].s_value)),NULL); ;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 58 "test.y"
-    { (yyval.a) = newfixsymlist((struct symbol*)newref((yyvsp[(1) - (3)].s_value)), (yyvsp[(3) - (3)].a)); ;}
+#line 60 "test.y"
+    { (yyval.f_list) = newfixsymlist((struct symbol*)newref((yyvsp[(1) - (3)].s_value)), (yyvsp[(3) - (3)].f_list)); ;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 62 "test.y"
+#line 64 "test.y"
     { (yyval.a) = typedivide(0,0,'I'); ;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 63 "test.y"
+#line 65 "test.y"
     { (yyval.a) = typedivide(0,0,'F'); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 64 "test.y"
+#line 66 "test.y"
     { (yyval.a) = typedivide(1,(yyvsp[(3) - (6)].f_value),'I'); ;}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 65 "test.y"
+#line 67 "test.y"
     { (yyval.a) = typedivide(1,(yyvsp[(3) - (6)].f_value),'F'); ;}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 70 "test.y"
+#line 72 "test.y"
     { (yyval.a) = (yyvsp[(2) - (3)].a); ;}
     break;
 
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 74 "test.y"
+#line 76 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 75 "test.y"
+#line 77 "test.y"
     { (yyval.a) = newast('L',(yyvsp[(1) - (3)].a),(yyvsp[(3) - (3)].a)); ;}
     break;
 
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 79 "test.y"
+#line 81 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 80 "test.y"
+#line 82 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 81 "test.y"
+#line 83 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 82 "test.y"
+#line 84 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 83 "test.y"
+#line 85 "test.y"
     { (yyval.a) = newasgn((struct symref*)(yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); printf("val->S : %d\n",((struct symref*)(yyvsp[(1) - (3)].a))->s) ;;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 84 "test.y"
+#line 86 "test.y"
     { (yyval.a) = newflow('W', (yyvsp[(3) - (5)].a), (yyvsp[(5) - (5)].a), NULL);  ;}
     break;
 
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 85 "test.y"
+#line 87 "test.y"
     { (yyval.a) = newflow('I', (yyvsp[(2) - (6)].a), (yyvsp[(4) - (6)].a), (yyvsp[(6) - (6)].a));    ;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 86 "test.y"
+#line 88 "test.y"
     { (yyval.a) = newast('X', NULL, NULL); ;}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 89 "test.y"
+#line 91 "test.y"
     { (yyval.a) = newfunc((yyvsp[(1) - (1)].fn), NULL); ;}
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 90 "test.y"
+#line 92 "test.y"
     { (yyval.a) = newfunc((yyvsp[(1) - (2)].fn), (yyvsp[(2) - (2)].a)); printf("print exp->s : %d\n",((struct symref*)(yyvsp[(2) - (2)].a))->s);;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 94 "test.y"
+#line 96 "test.y"
     { (yyval.a) = newref((yyvsp[(1) - (1)].s_value)); ;}
     break;
 
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 98 "test.y"
+#line 100 "test.y"
     { (yyval.a) = newcall((yyvsp[(1) - (4)].s_value), (yyvsp[(3) - (4)].a)); ;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 103 "test.y"
+#line 105 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 106 "test.y"
+#line 108 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 107 "test.y"
+#line 109 "test.y"
     { (yyval.a) = newast('L',(yyvsp[(1) - (3)].a),(yyvsp[(3) - (3)].a));  ;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 111 "test.y"
+#line 113 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 112 "test.y"
+#line 114 "test.y"
     { (yyval.a) = newcmp((yyvsp[(2) - (3)].fn), (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a));     ;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 116 "test.y"
+#line 118 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 117 "test.y"
+#line 119 "test.y"
     { (yyval.a) = newast('+', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a));     ;}
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 118 "test.y"
+#line 120 "test.y"
     { (yyval.a) = newast('-', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a));     ;}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 122 "test.y"
+#line 124 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 123 "test.y"
+#line 125 "test.y"
     { (yyval.a) = newast('*', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a));   ;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 124 "test.y"
+#line 126 "test.y"
     { (yyval.a) = newast('/', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a));   ;}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 128 "test.y"
+#line 130 "test.y"
     { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value),'I'); ;}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 129 "test.y"
+#line 131 "test.y"
     { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value),'F'); ;}
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 130 "test.y"
+#line 132 "test.y"
     { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 131 "test.y"
+#line 133 "test.y"
     { (yyval.a) = newast('M', (yyvsp[(2) - (2)].a), NULL);  ;}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 132 "test.y"
+#line 134 "test.y"
     { (yyval.a) = newast('!', (yyvsp[(2) - (2)].a), NULL);  ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1723 "test.tab.c"
+#line 1724 "test.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1931,7 +1932,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 138 "test.y"
+#line 140 "test.y"
 
 
 void yyerror(char *s) {

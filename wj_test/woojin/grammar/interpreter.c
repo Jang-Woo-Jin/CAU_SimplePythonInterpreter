@@ -40,7 +40,7 @@ struct ast *newast(int nodetype, struct ast *l, struct ast *r) {
 	struct ast *a = malloc(sizeof(struct ast));
 
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in newast");
 		exit(0);
 	}
 
@@ -54,7 +54,7 @@ struct ast *newnum(float d, int valuetype) {
 	struct numval *a = malloc(sizeof(struct numval));
 
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in newnum");
 		exit(0);
 	}
 
@@ -73,7 +73,7 @@ struct ast *newcmp(int cmptype, struct ast *l, struct ast *r) {
 	struct ast *a = malloc(sizeof(struct ast));
 
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in newcmp");
 		exit(0);
 	}
 	
@@ -87,7 +87,7 @@ struct ast *newfunc(int functype, struct ast *l) {
 	struct fncall *a = malloc(sizeof(struct fncall));
 
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in new func");
 		exit(0);
 	}
 
@@ -101,7 +101,7 @@ struct ast *newcall(struct symbol *s, struct ast *l) {
 	struct ufncall *a = malloc(sizeof(struct ufncall));
 
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in newcall");
 		exit(0);
 	}
 	
@@ -115,7 +115,7 @@ struct ast *newref(struct symbol *s) {
 	struct symref *a = malloc(sizeof(struct symref));
 
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in newref");
 		exit(0);
 	}
 
@@ -128,7 +128,7 @@ struct ast *newasgn(struct symref *l, struct ast *v) {
 	struct symasgn *a = malloc(sizeof(struct symasgn));
 	
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in newasgn");
 		exit(0);
 	}
 	int separater = ((struct numval*)v)->nodetype;
@@ -148,7 +148,7 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 	struct flow *a = malloc(sizeof(struct flow));
 
 	if(!a) {
-		yyerror("out of space");
+		yyerror("out of space in newflow");
 		exit(0);
 	}
 

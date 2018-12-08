@@ -13,6 +13,7 @@
     float f_value;
     struct symbol *s_value; /* which symbol */
     struct symlist *s_list;
+    struct fixsymlist *f_list;
     int fn; /* which function */
 }
 
@@ -28,8 +29,9 @@
 
 %type <a> compound_statement procedure_statement actural_parameter_expression 
 %type <a> print_statement expression_list simple_expression expression statement_list
-%type <a> statement variable term factor declarations identifier_list type
+%type <a> statement variable term factor declarations type
 
+%type <f_list> identifier_list
 
 %left GE LE EQ NE //'>' '<'
 %right '='
@@ -49,7 +51,7 @@ pr:
         | /* NULL */ ;
 
 declarations:
-        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct fixsymlist*)$2, $4, $6); }
+        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct f_list*)$2, $4, $6); }
         | epsilon       { $$ = newEpsilon(); }
         ;
 

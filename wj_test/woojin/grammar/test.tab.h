@@ -83,12 +83,13 @@ typedef union YYSTYPE
     float f_value;
     struct symbol *s_value; /* which symbol */
     struct symlist *s_list;
+    struct fixsymlist *f_list;
     int fn; /* which function */
 
 
 
 /* Line 1676 of yacc.c  */
-#line 92 "test.tab.h"
+#line 93 "test.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
