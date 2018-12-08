@@ -56,16 +56,14 @@ identifier_list:
         ID
         | ID ';' identifier_list
         ;
-
+//var id1;id2;id3;id4 : INTEGER ; 
 type:
-        standard_type
-        | ARRAY '[' num ']' OF standard_type
+        INTEGER { $$ = $1; }
+        | FLOAT { $$ = $1; }
+        | ARRAY '[' I_VALUE ']' OF INTEGER
+        | ARRAY '[' I_VALUE ']' OF FLOAT
         ;
 
-standard_type:
-        INTEGER
-        | FLOAT
-        ;
 
 subprogram_declarations:
         subprogram_declaration subprogram_declarations
