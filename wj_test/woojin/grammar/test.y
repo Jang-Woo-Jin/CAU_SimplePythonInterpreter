@@ -62,13 +62,10 @@ identifier_list:
         ;
 
 type:
-        standard_type
-        | ARRAY '[' I_VALUE ']' OF standard_type
-        ;
-
-standard_type:
-        INTEGER
-        | FLOAT
+        INTEGER { $$ = $1; }
+        | FLOAT { $$ = $1; }
+        | ARRAY '[' I_VALUE ']' OF INTEGER
+        | ARRAY '[' I_VALUE ']' OF FLOAT
         ;
 
 parameter_list:
