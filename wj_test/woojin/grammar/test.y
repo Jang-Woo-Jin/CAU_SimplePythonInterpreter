@@ -56,12 +56,12 @@ identifier_list:
         ID
         | ID ';' identifier_list
         ;
-//var id1;id2;id3;id4 : INTEGER ; 
+
 type:
-        INTEGER { $$ = $1; }
-        | FLOAT { $$ = $1; }
-        | ARRAY '[' I_VALUE ']' OF INTEGER
-        | ARRAY '[' I_VALUE ']' OF FLOAT
+        INTEGER                                 { $$ = typedivide(0,0,'I'); }
+        | FLOAT                                 { $$ = typedivide(0,0,'I'); }
+        | ARRAY '[' I_VALUE ']' OF INTEGER      { $$ = typedivide(1,$3,'I'); }
+        | ARRAY '[' I_VALUE ']' OF FLOAT        { $$ = typedivide(1,$3,'I'); }
         ;
 
 
@@ -108,6 +108,7 @@ statement:
     | IF  expression THEN statement ELSE statement  { $$ = newflow('I', $2, $4, $6);    }
     | NOP                                       { $$ = newast('X', NULL, NULL); }
     ;
+
 print_statement:
     PRINT   { $$ = newfunc($1, NULL); }
     | PRINT expression    { $$ = newfunc($1, $2); }

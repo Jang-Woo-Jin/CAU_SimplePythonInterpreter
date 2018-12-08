@@ -146,6 +146,19 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 	a->el = el;
 	return (struct ast *)a;
 }
+
+struct ast *typedivide(int isarray, int number, int type){
+	struct typedivide *a = malloc(sizeof(struct typedivide));
+	
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+
+	a->isarray = isarray;
+	a->number = number;
+	a->type = type;
+}
 /* free a tree of ASTs */
 void treefree(struct ast *a) {
 	switch(a->nodetype) {
@@ -236,7 +249,7 @@ float eval(struct ast *a) {
 			v = ((struct symref *)a)->s->value; 
 			break;
 		/* assignment */
-		case '=': 
+		case '=':
 			v = ((struct symasgn *)a)->s->value = eval(((struct symasgn *)a)->v);
 			break;
 		/* no operation*/

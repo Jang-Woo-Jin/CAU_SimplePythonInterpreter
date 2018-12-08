@@ -73,6 +73,12 @@ struct numval {
  float number;
 };
 
+struct typedivide {
+    int isarray;
+    float number;
+    int type;
+};
+
 struct symref {
  int nodetype; /* type N */
  struct symbol *s;
@@ -93,6 +99,7 @@ struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symref *l, struct ast *v);
 struct ast *newnum(float d);
 struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
+struct ast *typedivide(int isarray, float number, int type);
 
 static float callbuiltin(struct fncall *);
 static float calluser(struct ufncall *);
