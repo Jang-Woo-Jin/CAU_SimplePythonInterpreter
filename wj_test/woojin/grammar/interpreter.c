@@ -150,18 +150,6 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 	return (struct ast *)a;
 }
 
-struct ast *typedivide(int isarray, float number, int type){
-	struct typedivide *a = malloc(sizeof(struct typedivide));
-	
-	if(!a) {
-		yyerror("out of space");
-		exit(0);
-	}
-	a->nodetype = 'T';
-	a->isarray = isarray;
-	a->number = number;
-	a->type = type;
-}
 /* free a tree of ASTs */
 void treefree(struct ast *a) {
 	switch(a->nodetype) {
@@ -273,6 +261,14 @@ float eval(struct ast *a) {
 			printf("nop detected!\n");
 			v = 0.0;
 			//do nothing
+			break;
+		case 'E': 
+			printf("Epsilon detected!\n");
+			v = 0.0;
+			//do nothing
+			break;	
+		case 'T':
+			printf("type divided!\n");
 			break;
 		case 'E': 
 			printf("Epsilon detected!\n");
@@ -454,6 +450,20 @@ static float calluser(struct ufncall *f) {
 	return v;
 }
 
+///////////////////////
+struct ast *typedivide(int isarray, float number, int type){
+	struct typedivide *a = malloc(sizeof(struct typedivide));
+	
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = 'T';
+	a->isarray = isarray;
+	a->number = number;
+	a->type = type;
+}
+
 struct ast *newEpsilon(){
 	struct ast *a = malloc(sizeof(struct ast));
 
@@ -470,7 +480,7 @@ struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast 
 		yyerror("out of space");
 		exit(0);
 	}
-		temp->sym->type = type;
+	temp->sym->type = type;
 	
 	while(temp->next){
 		temp = temp->next;
@@ -481,10 +491,24 @@ struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast 
 
 	a->l = (struct ast*)idls;
 	a->r = r;
-	
-	printf("nodetype : %c\n",a->nodetype);
+	printf("sym : %d\n",temp->sym);
+	printf("type : %d\n",type);
+	printf("type->type : %c\n",type->type);
 	printf("right : %d\n",a->r);
 	printf("left : %d\n",a->l);
 	return a;
 
+}
+
+struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next) {
+	struct fixsymlist *fsl = malloc(sizeof(struct fixsymlist));
+
+	if(!fsl) {
+		yyerror("out of space");
+		exit(0);
+	}
+	fsl->nodetype = 'Z';
+	fsl->sym = sym;
+	fsl->next = next;
+	return fsl;
 }

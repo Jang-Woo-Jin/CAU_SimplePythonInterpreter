@@ -102,6 +102,19 @@ struct symasgn {
  struct symbol *s;
  struct ast *v; /* value */
 };
+/////////////////////////////////////////////
+
+struct typedivide {
+    int nodetype; /* type T */
+    int isarray;
+    float number;
+    int type;
+};
+struct fixsymlist {
+    int nodetype;
+    struct symbol *sym;
+    struct fixsymlist *next;
+};
 
 /* build an AST */
 struct ast *newast(int nodetype, struct ast *l, struct ast *r);
@@ -133,3 +146,8 @@ float eval(struct ast *);
 void treefree(struct ast *);
 /* interface to the lexer */
 extern int yylineno; /* from lexer */
+
+////////////////////////////////////////////////////////
+struct ast *typedivide(int isarray, float number, int type);
+struct ast *newEpsilon();
+struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast *r);
