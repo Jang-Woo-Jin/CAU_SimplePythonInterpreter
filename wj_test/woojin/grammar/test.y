@@ -46,6 +46,51 @@ function:
         function compound_statement  { eval($2); treefree($2); }
         | /* NULL */
         ;
+
+declarations:
+        VAR identifier_list ':' type ';' declarations
+        | epsilon
+        ;
+
+identifier_list:
+        ID
+        | ID ';' identifier_list
+        ;
+
+type:
+        standard_type
+        | ARRAY '[' num ']' OF standard_type
+        ;
+
+standard_type:
+        INTEGER
+        | FLOAT
+        ;
+
+subprogram_declarations:
+        subprogram_declaration subprogram_declarations
+        | epsilon
+        ;
+
+subprogram_declaration:
+        subprogram_head declarations compound_statement
+        ;
+
+subprogram_head:
+        FUNCTION ID argument ':' standard_type ';'
+        | PROCEDURE ID argument ';'
+        ;
+
+argument:
+        '(' parameter_list ')'
+        | epsilon
+        ;
+
+parameter_list:
+        identifier_list ':' type
+        | identifier_list ':' type ';' parameter_list
+        ;
+
 compound_statement:
         BEG statement_list END { $$ = $2; }
         ;
