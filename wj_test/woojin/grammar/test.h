@@ -77,6 +77,12 @@ struct numval {
  float number;
 };
 
+struct typedivide {
+    int isarray;
+    float number;
+    int type;
+};
+
 struct symref {
  int nodetype; /* type N */
  struct symbol *s;
@@ -103,6 +109,7 @@ struct ast *newidentifier(struct ast *idls, struct ast *type, struct ast *l);
 struct ast *newasgndec(struct declist *dl,struct ast *l, struct ast *r );
 struct ast *newdec(struct declist *dl, struct ast *l );
 
+struct ast *typedivide(int isarray, float number, int type);
 
 static float callbuiltin(struct fncall *);
 static float calluser(struct ufncall *);
