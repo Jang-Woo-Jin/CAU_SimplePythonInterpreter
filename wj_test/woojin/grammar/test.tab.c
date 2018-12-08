@@ -1437,7 +1437,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 54 "test.y"
-    { (yyval.a) = (yyvsp[(1) - (1)].a);  ;}
+    { (yyval.a) = (yyvsp[(1) - (1)].a); ;}
     break;
 
   case 7:
@@ -1494,6 +1494,13 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 65 "test.y"
     { (yyval.a) = newflow('I', (yyvsp[(2) - (6)].a), (yyvsp[(4) - (6)].a), (yyvsp[(6) - (6)].a));    ;}
+    break;
+
+  case 15:
+
+/* Line 1455 of yacc.c  */
+#line 66 "test.y"
+    { (yyval.a) = newast('X', NULL, NULL); ;}
     break;
 
   case 16:
@@ -1639,7 +1646,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1643 "test.tab.c"
+#line 1650 "test.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);

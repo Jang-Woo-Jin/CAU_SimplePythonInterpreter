@@ -51,7 +51,7 @@ compound_statement:
         ;
 
 statement_list:
-         statement                      { $$ = $1;  }
+         statement                      { $$ = $1; }
          | statement ';' statement_list { $$ = newast('L',$1,$3); }
          ;
 

@@ -50,10 +50,6 @@ struct ast *newast(int nodetype, struct ast *l, struct ast *r) {
 	return a;
 }
 
-struct ast *newnop(){
-
-}
-
 struct ast *newnum(float d) {
 	struct numval *a = malloc(sizeof(struct numval));
 
@@ -226,7 +222,7 @@ static float callbuiltin(struct fncall *f) {
 
 float eval(struct ast *a) {
 	float v;
-	if(!a) {
+	if(!a && a->nodetype != 'X') {
 		yyerror("internal error, null eval");
 		return 0.0;
 	}
@@ -245,6 +241,7 @@ float eval(struct ast *a) {
 			break;
 		/* no operation*/
 		case 'X':
+			printf("nop detected!");
 			v = 0.0;
 			//do nothing
 			break;
