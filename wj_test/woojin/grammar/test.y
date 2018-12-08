@@ -26,7 +26,10 @@
 %token OPERATOR DELIMITER
 
 
-%type <a> compound_statement procedure_statement actural_parameter_expression print_statement expression_list simple_expression expression statement_list statement variable term factor 
+%type <a> compound_statement procedure_statement actural_parameter_expression 
+%type <a> print_statement expression_list simple_expression expression statement_list
+%type <a> statement variable term factor declarations identifier_list type
+
 
 %left GE LE EQ NE //'>' '<'
 %right '='
@@ -37,15 +40,32 @@
 %start program
 
 %%
-
 program:
-       function                    { exit(0); }
+        pr    { exit(0); }                 
         ;
 
-function:
-        function compound_statement  { eval($2); treefree($2); }
-        | /* NULL */
+pr:
+        pr declarations compound_statement  { eval($2); eval($3); treefree($2); treefree($3); }
+        | /* NULL */ ;
+
+declarations:
+        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct fixsymlist*)$2, $4, $6); }
+        | epsilon       { $$ = newEpsilon(); }
         ;
+
+identifier_list:
+        ID      { $$ = newfixsymlist((struct symbol*)newref($1),NULL); }
+        | ID ';' identifier_list   { $$ = newfixsymlist((struct symbol*)newref($1), $3); }
+        ;
+
+type:
+        INTEGER                                 { $$ = typedivide(0,0,'I'); }
+        | FLOAT                                 { $$ = typedivide(0,0,'F'); }
+        | ARRAY '[' I_VALUE ']' OF INTEGER      { $$ = typedivide(1,$3,'I'); }
+        | ARRAY '[' I_VALUE ']' OF FLOAT        { $$ = typedivide(1,$3,'F'); }
+        ;
+
+
 compound_statement:
         BEG statement_list END { $$ = $2; }
         ;
@@ -60,14 +80,14 @@ statement:
     | print_statement    		        { $$ = $1; }
     | procedure_statement                  	{ $$ = $1; }
     | compound_statement                        { $$ = $1; }
-    | variable '=' expression      	        { $$ = newasgn((struct symref*)$1, $3); }
+    | variable '=' expression      	        { $$ = newasgn((struct symref*)$1, $3); printf("val->S : %d\n",((struct symref*)$1)->s) ;}
     | WHILE '(' expression ')' statement            { $$ = newflow('W', $3, $5, NULL);  }
     | IF  expression THEN statement ELSE statement  { $$ = newflow('I', $2, $4, $6);    }
     | NOP                                       { $$ = newast('X', NULL, NULL); }
     ;
 print_statement:
     PRINT   { $$ = newfunc($1, NULL); }
-    | PRINT expression    { $$ = newfunc($1, $2); }
+    | PRINT expression    { $$ = newfunc($1, $2); printf("print exp->s : %d\n",((struct symref*)$2)->s);}
     ;
 
 variable:
@@ -111,6 +131,7 @@ factor:
     | '-' expression %prec UMINUS   { $$ = newast('M', $2, NULL);  }
     | '!' factor                    { $$ = newast('!', $2, NULL);  }
     ;
+    
 epsilon:
         ;
 

@@ -8,6 +8,7 @@ extern int yylineno; /* from lexer */
 struct symbol { /* a variable name */
  char *name;
  float value;
+ struct ast *type;
  struct ast *func; /* stmt for the function */
  struct symlist *syms; /* list of dummy args */
 };
@@ -47,6 +48,7 @@ struct ast {
  int nodetype;
  struct ast *l;
  struct ast *r;
+ int type;
 };
 
 struct fncall { /* built-in function */
@@ -83,6 +85,19 @@ struct symasgn {
  struct symbol *s;
  struct ast *v; /* value */
 };
+/////////////////////////////////////////////
+
+struct typedivide {
+    int nodetype; /* type T */
+    int isarray;
+    float number;
+    int type;
+};
+struct fixsymlist {
+    int nodetype;
+    struct symbol *sym;
+    struct fixsymlist *next;
+};
 
 /* build an AST */
 struct ast *newast(int nodetype, struct ast *l, struct ast *r);
@@ -104,3 +119,8 @@ float eval(struct ast *);
 void treefree(struct ast *);
 /* interface to the lexer */
 extern int yylineno; /* from lexer */
+
+////////////////////////////////////////////////////////
+struct ast *typedivide(int isarray, float number, int type);
+struct ast *newEpsilon();
+struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast *r);
