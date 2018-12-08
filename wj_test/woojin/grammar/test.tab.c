@@ -1448,7 +1448,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 54 "test.y"
-    { (yyval.a) = newidentifier((struct f_list*)(yyvsp[(2) - (6)].f_list), (yyvsp[(4) - (6)].a), (yyvsp[(6) - (6)].a)); ;}
+    { (yyval.a) = newidentifier((struct fixsymlist*)(yyvsp[(2) - (6)].f_list), (yyvsp[(4) - (6)].a), (yyvsp[(6) - (6)].a)); ;}
     break;
 
   case 6:

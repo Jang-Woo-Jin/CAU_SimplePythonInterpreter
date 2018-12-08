@@ -51,7 +51,7 @@ pr:
         | /* NULL */ ;
 
 declarations:
-        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct f_list*)$2, $4, $6); }
+        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct fixsymlist*)$2, $4, $6); }
         | epsilon       { $$ = newEpsilon(); }
         ;
 

@@ -134,6 +134,8 @@ struct ast *newasgn(struct symref *l, struct ast *v) {
 	int separater = ((struct numval*)v)->nodetype;
 	if(separater > 200) separater -= 200;
 	else if(separater > 100) separater -= 100;
+	
+	printf("asign l->s : %d\n",l->s);
 	/*
 	if(((struct typedivide *)(l->s->type))->valuetype != separater){
 		printf("type miss match!\n");
@@ -490,7 +492,7 @@ struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast 
 
 	a->l = (struct ast*)idls;
 	a->r = r;
-	printf("sym : %d\n",temp->sym);
+	printf("first sym : %d\n",temp->sym);
 	printf("type : %d\n",type);
 	printf("type->type : %c\n",type->type);
 	printf("right : %d\n",a->r);

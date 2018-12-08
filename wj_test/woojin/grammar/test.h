@@ -108,7 +108,7 @@ struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symref *l, struct ast *v);
 struct ast *newnum(float d, int valuetype);
 struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
-struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next);
+
 static float callbuiltin(struct fncall *);
 static float calluser(struct ufncall *);
 /* define a function */
@@ -124,3 +124,4 @@ extern int yylineno; /* from lexer */
 struct ast *typedivide(int isarray, float number, int type);
 struct ast *newEpsilon();
 struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast *r);
+struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next);
