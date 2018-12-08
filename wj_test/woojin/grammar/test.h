@@ -8,6 +8,7 @@ extern int yylineno; /* from lexer */
 struct symbol { /* a variable name */
  char *name;
  float value;
+ int type;
  struct ast *func; /* stmt for the function */
  struct symlist *syms; /* list of dummy args */
 };
@@ -26,6 +27,7 @@ struct symlist {
 /* node types
  * + - * / |
  * 0-7 comparison ops, bit coded 04 equal, 02 less, 01 greater
+ * K number
  * M unary minus
  * L expression or statement list
  * I IF statement
@@ -36,6 +38,8 @@ struct symlist {
  * F built in function call
  * C user function call
  * X no operation
+ * D declaration
+ * 
  */
 enum bifs { /* built-in functions */
  B_print = 1,
@@ -93,6 +97,12 @@ struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symref *l, struct ast *v);
 struct ast *newnum(float d);
 struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
+struct ast *newidentifier(struct ast *idls, struct ast *type, struct ast *l);
+
+
+struct ast *newasgndec(struct declist *dl,struct ast *l, struct ast *r );
+struct ast *newdec(struct declist *dl, struct ast *l );
+
 
 static float callbuiltin(struct fncall *);
 static float calluser(struct ufncall *);

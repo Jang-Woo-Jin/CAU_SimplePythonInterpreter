@@ -412,3 +412,15 @@ static float calluser(struct ufncall *f) {
 	free(oldval);
 	return v;
 }
+
+struct ast *newidentifier(struct ast *idls, struct ast *type, struct ast *l){
+	struct symasgn *a = malloc(sizeof(struct symasgn));
+	
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	
+	return (struct ast *)a;
+
+}

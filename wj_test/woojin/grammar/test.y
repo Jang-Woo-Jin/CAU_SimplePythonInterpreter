@@ -52,13 +52,13 @@ b:
         ;
 
 declarations:
-        VAR identifier_list ':' type ';' declarations
+        VAR identifier_list ':' type ';' declarations { $$ = newidentifier($2, $4, $6); }
         | epsilon
         ;
 
 identifier_list:
-        ID
-        | ID ';' identifier_list
+        ID      { $$ = newref($1); }
+        | ID ';' identifier_list   { $$ = newsymlist($1, $3); }
         ;
 
 type:
@@ -69,8 +69,8 @@ type:
         ;
 
 parameter_list:
-        identifier_list ':' type
-        | identifier_list ':' type ';' parameter_list
+        identifier_list ':' type  { $$ = newidentifier($2, $4, NULL); }
+        | identifier_list ':' type ';' parameter_list  { $$ = newidentifier($2, $4, $6); }
         ;
 
 compound_statement:
