@@ -147,7 +147,7 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 	return (struct ast *)a;
 }
 
-struct ast *typedivide(int isarray, int number, int type){
+struct ast *typedivide(int isarray, float number, int type){
 	struct typedivide *a = malloc(sizeof(struct typedivide));
 	
 	if(!a) {
@@ -175,7 +175,7 @@ void treefree(struct ast *a) {
 		case 'M': case 'C': case 'F':
 			treefree(a->l);
 		/* no subtree */
-		case 'K': case 'N': case 'X':
+		case 'K': case 'N': case 'X': case 'T':
 			break;
 		
 		case '=':
