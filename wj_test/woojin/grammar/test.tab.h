@@ -82,7 +82,7 @@ typedef union YYSTYPE
     struct ast *a;
     float f_value;
     struct symbol *s_value; /* which symbol */
-    struct symlist *s_list;
+    struct fixsymlist *s_list;
     int fn; /* which function */
 
 

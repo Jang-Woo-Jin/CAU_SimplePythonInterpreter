@@ -12,7 +12,7 @@
     struct ast *a;
     float f_value;
     struct symbol *s_value; /* which symbol */
-    struct symlist *s_list;
+    struct fixsymlist *s_list;
     int fn; /* which function */
 }
 
@@ -39,32 +39,25 @@
 %%
 
 program:
-       | program kk    { exit(0); }                 
+       | kk    { exit(0); }                 
         ;
 
 kk:
-        bbb       { eval($1); treefree($1); }
+        kk bbb       { eval($2); treefree($2); }
+        |
         ;
 bbb:
-        declarations compound_statement  { $$ = newast('L', $1, $2);
-                printf("%d\n",$1);
-                printf("%d\n",$1->r);
-                // printf("%s\n",((struct symlist)($1->r))->sym);
-                // printf("%d\n",((struct symbol)($1->r->sym))->type);
-                // printf("%s\n",((struct symlist)($1->r))->next);
-                // printf("%d\n",((struct symbol)($1->r->next))->type);
-
-        }
+        declarations compound_statement  { $$ = newast('L', $1, $2); }
         ;
 
 declarations:
-        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct symlist*)$2, $4, $6); }
-        | epsilon
+        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct fixsymlist*)$2, $4, $6); }
+        | epsilon       { $$ = newEpsilon(); }
         ;
 
 identifier_list:
-        ID      { $$ = newsymlist($1,NULL); printf("%d\n",$1);}
-        | ID ';' identifier_list   { $$ = newsymlist($1, $3); printf("%d\n",$1);}
+        ID      { $$ = newfixsymlist((struct symbol*)newref($1),NULL); }
+        | ID ';' identifier_list   { $$ = newfixsymlist($1, $3); }
         ;
 
 type:
@@ -75,8 +68,8 @@ type:
         ;
 
 parameter_list:
-        identifier_list ':' type  { $$ = newidentifier((struct symlist*)$1, $3, NULL); }
-        | identifier_list ':' type ';' parameter_list  { $$ = newidentifier((struct symlist*)$1, $3, $5); }
+        identifier_list ':' type  { $$ = newidentifier((struct fixsymlist*)$1, $3, NULL); }
+        | identifier_list ':' type ';' parameter_list  { $$ = newidentifier((struct fixsymlist*)$1, $3, $5); }
         ;
 
 compound_statement:

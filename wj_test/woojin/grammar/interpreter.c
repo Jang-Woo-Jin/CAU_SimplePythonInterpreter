@@ -154,7 +154,7 @@ struct ast *typedivide(int isarray, float number, int type){
 		yyerror("out of space");
 		exit(0);
 	}
-
+	a->nodetype = 'T';
 	a->isarray = isarray;
 	a->number = number;
 	a->type = type;
@@ -172,10 +172,10 @@ void treefree(struct ast *a) {
 			treefree(a->r);
 		/* one subtree */
 		case '|':
-		case 'M': case 'C': case 'F':
+		case 'M': case 'C': case 'F': case 'U': 
 			treefree(a->l);
 		/* no subtree */
-		case 'K': case 'N': case 'X': case 'T':
+		case 'K': case 'N': case 'X': case 'T': case 'E': case 'Z':
 			break;
 		
 		case '=':
@@ -207,6 +207,19 @@ struct symlist *newsymlist(struct symbol *sym, struct symlist *next) {
 	sl->sym = sym;
 	sl->next = next;
 	return sl;
+}
+
+struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next) {
+	struct fixsymlist *fsl = malloc(sizeof(struct fixsymlist));
+
+	if(!fsl) {
+		yyerror("out of space");
+		exit(0);
+	}
+	fsl->nodetype = 'Z';
+	fsl->sym = sym;
+	fsl->next = next;
+	return fsl;
 }
 /* free a list of symbols */
 void symlistfree(struct symlist *sl) {
@@ -253,10 +266,18 @@ float eval(struct ast *a) {
 			v = ((struct symasgn *)a)->s->value = eval(((struct symasgn *)a)->v);
 			break;
 		/* no operation*/
-		case 'X':
-			printf("nop detected!");
+		case 'X': 
+			printf("nop detected!\n");
 			v = 0.0;
 			//do nothing
+			break;
+		case 'E': 
+			printf("Epsilon detected!\n");
+			v = 0.0;
+			//do nothing
+			break;	
+		case 'T':
+			printf("type divided!\n");
 			break;
 		/* expressions */
 		case '+': 
@@ -335,6 +356,9 @@ float eval(struct ast *a) {
 			eval(a->l);
 			v = eval(a->r); 
 			break;
+		case 'U': case 'Z':
+			v = eval(a->l);
+			break;
 		case 'F':
 			v = callbuiltin((struct fncall *)a); 
 			break;
@@ -342,6 +366,7 @@ float eval(struct ast *a) {
 			v = calluser((struct ufncall *)a); 
 			break;
 		default:
+			printf("point value : %d\n",a);
 			printf("internal error: bad node %c\n", a->nodetype);
 	}
 	return v;
@@ -426,9 +451,17 @@ static float calluser(struct ufncall *f) {
 	return v;
 }
 
-struct ast *newidentifier(struct symlist *idls, struct ast *type, struct ast *l){
+struct ast *newEpsilon(){
 	struct ast *a = malloc(sizeof(struct ast));
-	struct symlist *temp = idls;
+
+	a->nodetype = 'E';
+
+	return a;
+}
+
+struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast *r){
+	struct ast *a = malloc(sizeof(struct ast));
+	struct fixsymlist *temp = idls;
 
 	if(!a) {
 		yyerror("out of space");
@@ -440,8 +473,15 @@ struct ast *newidentifier(struct symlist *idls, struct ast *type, struct ast *l)
 		temp = temp->next;
 		temp->sym->type = type;
 	}
-	a->r = (struct ast*)idls;
-	a->l = l;
+	if(r->nodetype == 'E') a->nodetype = 'U';
+	else a->nodetype = 'L';
+
+	a->l = (struct ast*)idls;
+	a->r = r;
+	
+	printf("nodetype : %c\n",a->nodetype);
+	printf("right : %d\n",a->r);
+	printf("left : %d\n",a->l);
 	return a;
 
 }

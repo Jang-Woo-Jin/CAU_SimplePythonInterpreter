@@ -24,6 +24,12 @@ struct symlist {
  struct symlist *next;
 };
 
+struct fixsymlist {
+    int nodetype;
+    struct symbol *sym;
+    struct fixsymlist *next;
+};
+
 /* node types
  * + - * / |
  * 0-7 comparison ops, bit coded 04 equal, 02 less, 01 greater
@@ -104,9 +110,11 @@ struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symref *l, struct ast *v);
 struct ast *newnum(float d);
 struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
-struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
-struct ast *newidentifier(struct symlist *idls, struct ast *type, struct ast *l);
 
+struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next);
+struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
+struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast *l);
+struct ast *newEpsilon();
 /*
 struct ast *newasgndec(struct declist *dl,struct ast *l, struct ast *r );
 struct ast *newdec(struct declist *dl, struct ast *l );
