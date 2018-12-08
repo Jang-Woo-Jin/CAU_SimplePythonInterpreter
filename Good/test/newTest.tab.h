@@ -55,41 +55,19 @@
      RETURN = 271,
      PRINT = 272,
      ID = 273,
-     GE = 274,
-     LE = 275,
-     EQ = 276,
-     NE = 277,
-     INTEGER = 278,
-     FLOAT = 279,
-     I_VALUE = 280,
-     F_VALUE = 281,
-     OPERATOR = 282,
-     DELIMITER = 283,
-     CMP = 284,
-     UMINUS = 285
+     INTEGER = 274,
+     FLOAT = 275,
+     I_VALUE = 276,
+     F_VALUE = 277,
+     OPERATOR = 278,
+     DELIMITER = 279
    };
 #endif
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
-{
-
-/* Line 1676 of yacc.c  */
-#line 11 "test.y"
-
-    struct ast *a;
-    float f_value;
-    struct symbol *s_value; /* which symbol */
-    struct symlist *s_list;
-    int fn; /* which function */
-
-
-
-/* Line 1676 of yacc.c  */
-#line 92 "test.tab.h"
-} YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
