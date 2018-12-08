@@ -26,7 +26,7 @@
 %token OPERATOR DELIMITER
 
 
-%type <a> compound_statement procedure_statement actural_parameter_expression print_statement expression_list simple_expression expression statement_list statement variable term factor 
+%type <a> function compound_statement procedure_statement actural_parameter_expression print_statement expression_list simple_expression expression statement_list statement variable term factor 
 
 %left GE LE EQ NE //'>' '<'
 %right '='
@@ -39,11 +39,15 @@
 %%
 
 program:
-       function                    { exit(0); }
+       | program a    { exit(0); }                 
         ;
 
-function:
-        function compound_statement  { eval($2); treefree($2); }
+a:
+        b       { eval($2); treefree($2); }
+        | /* NULL */
+        ;
+b:
+        declarations compound_statement  { $$ = newast('L', $1, $2);}
         | /* NULL */
         ;
 
@@ -59,31 +63,12 @@ identifier_list:
 
 type:
         standard_type
-        | ARRAY '[' num ']' OF standard_type
+        | ARRAY '[' I_VALUE ']' OF standard_type
         ;
 
 standard_type:
         INTEGER
         | FLOAT
-        ;
-
-subprogram_declarations:
-        subprogram_declaration subprogram_declarations
-        | epsilon
-        ;
-
-subprogram_declaration:
-        subprogram_head declarations compound_statement
-        ;
-
-subprogram_head:
-        FUNCTION ID argument ':' standard_type ';'
-        | PROCEDURE ID argument ';'
-        ;
-
-argument:
-        '(' parameter_list ')'
-        | epsilon
         ;
 
 parameter_list:

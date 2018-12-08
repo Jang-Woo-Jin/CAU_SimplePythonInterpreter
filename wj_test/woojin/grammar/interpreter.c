@@ -222,7 +222,7 @@ static float callbuiltin(struct fncall *f) {
 
 float eval(struct ast *a) {
 	float v;
-	if(!a && a->nodetype != 'X') {
+	if(!a) {
 		yyerror("internal error, null eval");
 		return 0.0;
 	}
