@@ -78,6 +78,7 @@ struct numval {
 };
 
 struct typedivide {
+    int nodetype; /* type T */
     int isarray;
     float number;
     int type;
