@@ -8,7 +8,7 @@ extern int yylineno; /* from lexer */
 struct symbol { /* a variable name */
  char *name;
  float value;
- int type;
+ struct ast *type;
  struct ast *func; /* stmt for the function */
  struct symlist *syms; /* list of dummy args */
 };
@@ -103,13 +103,14 @@ struct ast *newcall(struct symbol *s, struct ast *l);
 struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symref *l, struct ast *v);
 struct ast *newnum(float d);
+struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
 struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
-struct ast *newidentifier(struct ast *idls, struct ast *type, struct ast *l);
+struct ast *newidentifier(struct symlist *idls, struct ast *type, struct ast *l);
 
-
+/*
 struct ast *newasgndec(struct declist *dl,struct ast *l, struct ast *r );
 struct ast *newdec(struct declist *dl, struct ast *l );
-
+*/
 struct ast *typedivide(int isarray, float number, int type);
 
 static float callbuiltin(struct fncall *);

@@ -26,8 +26,8 @@
 %token OPERATOR DELIMITER
 
 
-%type <a> function compound_statement procedure_statement actural_parameter_expression print_statement expression_list simple_expression expression statement_list statement variable term factor 
-
+%type <a> kk bbb declarations parameter_list type compound_statement procedure_statement actural_parameter_expression print_statement expression_list simple_expression expression statement_list statement variable term factor 
+%type <s_list> identifier_list
 %left GE LE EQ NE //'>' '<'
 %right '='
 %left '+' '-'
@@ -39,38 +39,44 @@
 %%
 
 program:
-       | program a    { exit(0); }                 
+       | program kk    { exit(0); }                 
         ;
 
-a:
-        b       { eval($2); treefree($2); }
-        | /* NULL */
+kk:
+        bbb       { eval($1); treefree($1); }
         ;
-b:
-        declarations compound_statement  { $$ = newast('L', $1, $2);}
-        | /* NULL */
+bbb:
+        declarations compound_statement  { $$ = newast('L', $1, $2);
+                printf("%d\n",$1);
+                printf("%d\n",$1->r);
+                // printf("%s\n",((struct symlist)($1->r))->sym);
+                // printf("%d\n",((struct symbol)($1->r->sym))->type);
+                // printf("%s\n",((struct symlist)($1->r))->next);
+                // printf("%d\n",((struct symbol)($1->r->next))->type);
+
+        }
         ;
 
 declarations:
-        VAR identifier_list ':' type ';' declarations { $$ = newidentifier($2, $4, $6); }
+        VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct symlist*)$2, $4, $6); }
         | epsilon
         ;
 
 identifier_list:
-        ID      { $$ = newref($1); }
-        | ID ';' identifier_list   { $$ = newsymlist($1, $3); }
+        ID      { $$ = newsymlist($1,NULL); printf("%d\n",$1);}
+        | ID ';' identifier_list   { $$ = newsymlist($1, $3); printf("%d\n",$1);}
         ;
 
 type:
         INTEGER                                 { $$ = typedivide(0,0,'I'); }
-        | FLOAT                                 { $$ = typedivide(0,0,'I'); }
+        | FLOAT                                 { $$ = typedivide(0,0,'F'); }
         | ARRAY '[' I_VALUE ']' OF INTEGER      { $$ = typedivide(1,$3,'I'); }
-        | ARRAY '[' I_VALUE ']' OF FLOAT        { $$ = typedivide(1,$3,'I'); }
+        | ARRAY '[' I_VALUE ']' OF FLOAT        { $$ = typedivide(1,$3,'F'); }
         ;
 
 parameter_list:
-        identifier_list ':' type  { $$ = newidentifier($2, $4, NULL); }
-        | identifier_list ':' type ';' parameter_list  { $$ = newidentifier($2, $4, $6); }
+        identifier_list ':' type  { $$ = newidentifier((struct symlist*)$1, $3, NULL); }
+        | identifier_list ':' type ';' parameter_list  { $$ = newidentifier((struct symlist*)$1, $3, $5); }
         ;
 
 compound_statement:
