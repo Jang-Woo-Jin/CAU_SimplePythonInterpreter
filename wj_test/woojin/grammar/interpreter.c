@@ -50,15 +50,21 @@ struct ast *newast(int nodetype, struct ast *l, struct ast *r) {
 	return a;
 }
 
-struct ast *newnum(float d) {
+struct ast *newnum(float d, int valuetype) {
 	struct numval *a = malloc(sizeof(struct numval));
 
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
 	}
-	
-	a->nodetype = 'K';
+
+	if(valuetype == 'I') a->nodetype = 'K' + 100;
+	else if(valuetype == 'F') a->nodetype = 'K' + 200;
+	else {
+		yyerror("Unvalid number type");
+		exit(0);
+	}
+
 	a->number = d;
 	return (struct ast *)a;
 }
@@ -125,7 +131,13 @@ struct ast *newasgn(struct symref *l, struct ast *v) {
 		yyerror("out of space");
 		exit(0);
 	}
-	
+	int separater = ((struct numval*)v)->nodetype;
+	if(separater > 200) separater -= 200;
+	else if(separater > 100) separater -= 100;
+	/*
+	if(((struct typedivide *)(l->s->type))->valuetype != separater){
+		printf("type miss match!\n");
+	}*/
 	a->nodetype = '=';
 	a->s = l->s;
 	a->v = v;
@@ -149,7 +161,11 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 
 /* free a tree of ASTs */
 void treefree(struct ast *a) {
-	switch(a->nodetype) {
+	int separater = a->nodetype;
+	if(separater > 200) separater -= 200;
+	else if(separater > 100) separater -= 100;
+	
+	switch(separater) {
 	/* two subtrees */
 		case '+':
 		case '-':
@@ -227,7 +243,12 @@ float eval(struct ast *a) {
 		yyerror("internal error, null eval");
 		return 0.0;
 	}
-	switch(a->nodetype) {
+	
+	int separater = a->nodetype;
+	if(separater > 200) separater -= 200;
+	else if(separater > 100) separater -= 100;
+		
+	switch(separater) {
 		/* constant */
 		case 'K': 
 			v = ((struct numval *)a)->number; 
@@ -437,7 +458,9 @@ struct ast *typedivide(int isarray, float number, int type){
 	a->nodetype = 'T';
 	a->isarray = isarray;
 	a->number = number;
-	a->type = type;
+	a->valuetype = type;
+
+	return (struct ast*)a;
 }
 
 struct ast *newEpsilon(){

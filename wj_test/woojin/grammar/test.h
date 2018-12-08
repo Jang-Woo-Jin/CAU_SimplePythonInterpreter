@@ -91,7 +91,7 @@ struct typedivide {
     int nodetype; /* type T */
     int isarray;
     float number;
-    int type;
+    int valuetype;
 };
 struct fixsymlist {
     int nodetype;
@@ -106,7 +106,7 @@ struct ast *newfunc(int functype, struct ast *l);
 struct ast *newcall(struct symbol *s, struct ast *l);
 struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symref *l, struct ast *v);
-struct ast *newnum(float d);
+struct ast *newnum(float d, int valuetype);
 struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
 
 static float callbuiltin(struct fncall *);

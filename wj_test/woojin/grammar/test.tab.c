@@ -1685,14 +1685,14 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 128 "test.y"
-    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value)); ;}
+    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value),'I'); ;}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
 #line 129 "test.y"
-    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value)); ;}
+    { (yyval.a) = newnum((yyvsp[(1) - (1)].f_value),'F'); ;}
     break;
 
   case 43:

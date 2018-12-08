@@ -125,8 +125,8 @@ term:
         ;
 
 factor:
-    I_VALUE                         { $$ = newnum($1); }
-    | F_VALUE			    { $$ = newnum($1); }
+    I_VALUE                         { $$ = newnum($1,'I'); }
+    | F_VALUE			    { $$ = newnum($1,'F'); }
     | variable                      { $$ = $1; }
     | '-' expression %prec UMINUS   { $$ = newast('M', $2, NULL);  }
     | '!' factor                    { $$ = newast('!', $2, NULL);  }

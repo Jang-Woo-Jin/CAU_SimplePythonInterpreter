@@ -1,3 +1,5 @@
+var num1 : int;
+//var num2; num3; num4 : float;
 begin
 num1 = 1;
 num2 = 2.0;
