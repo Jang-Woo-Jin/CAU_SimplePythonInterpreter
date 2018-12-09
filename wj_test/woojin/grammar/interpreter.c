@@ -4,7 +4,11 @@
 # include <string.h>
 # include <math.h>
 # include "test.h"
-
+/*
+#define ADDOTHERS 5000
+#define ADDFLOAT 2000
+#define ADDINTEGER 1000
+*/
 /* symbol table */
 /* hash a symbol */
 static unsigned symhash(char *sym) {
@@ -47,6 +51,7 @@ struct ast *newast(int nodetype, struct ast *l, struct ast *r) {
 	a->nodetype = nodetype;
 	a->l = l;
 	a->r = r;
+	
 	return a;
 }
 
@@ -58,8 +63,8 @@ struct ast *newnum(float d, int valuetype) {
 		exit(0);
 	}
 
-	if(valuetype == 'I') a->nodetype = 'K' + 100;
-	else if(valuetype == 'F') a->nodetype = 'K' + 200;
+	if(valuetype == 'I') a->nodetype = 'K' + 1000;
+	else if(valuetype == 'F') a->nodetype = 'K' + 2000;
 	else {
 		yyerror("Unvalid number type");
 		exit(0);
@@ -131,15 +136,21 @@ struct ast *newasgn(struct symref *l, struct ast *v) {
 		yyerror("out of space in newasgn");
 		exit(0);
 	}
-	int separater = ((struct numval*)v)->nodetype;
-	if(separater > 200) separater -= 200;
-	else if(separater > 100) separater -= 100;
 	
-	printf("asign l->s : %d\n",l->s);
-	/*
-	if(((struct typedivide *)(l->s->type))->valuetype != separater){
+	int valuetype = ((struct numval*)v)->nodetype;
+	if(valuetype > 2000) valuetype = 'F';
+	else if(valuetype > 1000) valuetype = 'I';
+	
+	// printf("asign l->s : %d\n",l->s);
+	// printf("asign l->s type : %d\n",(struct type*)(l->s->type));
+	// printf("asign l->s valuetype : %c\n",(struct type*)(l->s->type)->valuetype);
+	// printf("asigned value type : %c\n",valuetype);
+	if(((struct typedivide *)(l->s->type))->valuetype != valuetype){
 		printf("type miss match!\n");
-	}*/
+	}
+	else {
+		printf("type match!\n");
+	}
 	a->nodetype = '=';
 	a->s = l->s;
 	a->v = v;
@@ -164,8 +175,8 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 /* free a tree of ASTs */
 void treefree(struct ast *a) {
 	int separater = a->nodetype;
-	if(separater > 200) separater -= 200;
-	else if(separater > 100) separater -= 100;
+	if(separater > 2000) separater -= 2000;
+	else if(separater > 1000) separater -= 1000;
 	
 	switch(separater) {
 	/* two subtrees */
@@ -229,9 +240,14 @@ static float callbuiltin(struct fncall *f) {
 	enum bifs functype = f->functype;
 	float v = eval(f->l);
 	
+	int valuetype = f->l->valuetype;
+	
 	switch(functype) {
 		case B_print:
-			printf("print = %4.4g\n", v);
+			// if(valuetype == 'F') printf("float = %4.4f\n",v);
+			// else if(valuetype == 'I') printf("int = %d\n",v);
+			// else printf("Error unknown num type");
+			printf("print = %4.4g\n",v);
 			return v;
 		default:
 			yyerror("Unknown built-in function %d", functype);
@@ -247,8 +263,8 @@ float eval(struct ast *a) {
 	}
 	
 	int separater = a->nodetype;
-	if(separater > 200) separater -= 200;
-	else if(separater > 100) separater -= 100;
+	if(separater > 2000) separater -= 2000;
+	else if(separater > 1000) separater -= 1000;
 		
 	switch(separater) {
 		/* constant */
@@ -365,6 +381,7 @@ float eval(struct ast *a) {
 			break;
 		default:
 			printf("point value : %d\n",a);
+			printf("point seperator : %d\n",separater);
 			printf("internal error: bad node %c\n", a->nodetype);
 	}
 	return v;
@@ -481,27 +498,27 @@ struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast 
 		yyerror("out of space");
 		exit(0);
 	}
-	temp->sym->type = type;
+	temp->symref->s->type = type;
 	
 	while(temp->next){
 		temp = temp->next;
-		temp->sym->type = type;
+		temp->symref->s->type = type;
 	}
 	if(r->nodetype == 'E') a->nodetype = 'U';
 	else a->nodetype = 'L';
 
 	a->l = (struct ast*)idls;
 	a->r = r;
-	printf("first sym : %d\n",temp->sym);
-	printf("type : %d\n",type);
-	printf("type->type : %c\n",type->type);
-	printf("right : %d\n",a->r);
-	printf("left : %d\n",a->l);
+	// printf("first sym : %d\n",temp->symref->s);
+	// printf("type : %d\n",type);
+	// printf("type->type : %c\n",type->valuetype);
+	// printf("right : %d\n",a->r);
+	// printf("left : %d\n",a->l);
 	return a;
 
 }
 
-struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next) {
+struct fixsymlist *newfixsymlist(struct symref *sym, struct fixsymlist *next) {
 	struct fixsymlist *fsl = malloc(sizeof(struct fixsymlist));
 
 	if(!fsl) {
@@ -509,7 +526,26 @@ struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next) {
 		exit(0);
 	}
 	fsl->nodetype = 'Z';
-	fsl->sym = sym;
+	fsl->symref = sym;
 	fsl->next = next;
+	// printf("make fixsymlist symref: %d\n",sym);
+	// printf("make fixsymlist sym: %d\n",sym->s);
 	return fsl;
 }
+
+/*
+int makeNodeType(int addednodetype){
+	int makednodetype;
+	if(addednodetype > 5000) makednodetype = addednodetype - 5000;
+	else if(addednodetype > 2000) makednodetype = addednodetype - 2000;
+	else if(addednodetype > 1000) makednodetype = addednodetype - 1000;
+	else makednodetype = 0;
+	return makednodetype;
+}
+int findNumValueType(int nodetype){
+	int valuetype = nodetype;
+	if(valuetype > 2000) valuetype = 'F';
+	else if(valuetype > 1000) valuetype = 'I';
+	return valuetype;
+}
+*/

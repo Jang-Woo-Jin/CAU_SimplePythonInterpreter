@@ -48,7 +48,7 @@ struct ast {
  int nodetype;
  struct ast *l;
  struct ast *r;
- int type;
+ int valuetype;
 };
 
 struct fncall { /* built-in function */
@@ -95,7 +95,7 @@ struct typedivide {
 };
 struct fixsymlist {
     int nodetype;
-    struct symbol *sym;
+    struct symref *symref;
     struct fixsymlist *next;
 };
 
@@ -124,4 +124,4 @@ extern int yylineno; /* from lexer */
 struct ast *typedivide(int isarray, float number, int type);
 struct ast *newEpsilon();
 struct ast *newidentifier(struct fixsymlist *idls, struct ast *type, struct ast *r);
-struct fixsymlist *newfixsymlist(struct symbol *sym, struct fixsymlist *next);
+struct fixsymlist *newfixsymlist(struct symref *sym, struct fixsymlist *next);

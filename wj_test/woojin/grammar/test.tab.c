@@ -475,7 +475,7 @@ static const yytype_uint8 yyrline[] =
       65,    66,    67,    72,    76,    77,    81,    82,    83,    84,
       85,    86,    87,    88,    91,    92,    96,    97,   100,   104,
      105,   108,   109,   113,   114,   118,   119,   120,   124,   125,
-     126,   130,   131,   132,   133,   134,   137
+     126,   130,   131,   132,   133,   134,   138
 };
 #endif
 
@@ -1451,25 +1451,18 @@ yyreduce:
     { (yyval.a) = newidentifier((struct fixsymlist*)(yyvsp[(2) - (6)].f_list), (yyvsp[(4) - (6)].a), (yyvsp[(6) - (6)].a)); ;}
     break;
 
-  case 6:
-
-/* Line 1455 of yacc.c  */
-#line 55 "test.y"
-    { (yyval.a) = newEpsilon(); ;}
-    break;
-
   case 7:
 
 /* Line 1455 of yacc.c  */
 #line 59 "test.y"
-    { (yyval.f_list) = newfixsymlist((struct symbol*)newref((yyvsp[(1) - (1)].s_value)),NULL); ;}
+    { (yyval.f_list) = newfixsymlist((struct symref*)newref((yyvsp[(1) - (1)].s_value)),NULL); ;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
 #line 60 "test.y"
-    { (yyval.f_list) = newfixsymlist((struct symbol*)newref((yyvsp[(1) - (3)].s_value)), (yyvsp[(3) - (3)].f_list)); ;}
+    { (yyval.f_list) = newfixsymlist((struct symref*)newref((yyvsp[(1) - (3)].s_value)), (yyvsp[(3) - (3)].f_list)); ;}
     break;
 
   case 9:
@@ -1553,7 +1546,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 85 "test.y"
-    { (yyval.a) = newasgn((struct symref*)(yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); printf("val->S : %d\n",((struct symref*)(yyvsp[(1) - (3)].a))->s) ;;}
+    { (yyval.a) = newasgn((struct symref*)(yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); ;}
     break;
 
   case 21:
@@ -1588,7 +1581,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 92 "test.y"
-    { (yyval.a) = newfunc((yyvsp[(1) - (2)].fn), (yyvsp[(2) - (2)].a)); printf("print exp->s : %d\n",((struct symref*)(yyvsp[(2) - (2)].a))->s);;}
+    { (yyval.a) = newfunc((yyvsp[(1) - (2)].fn), (yyvsp[(2) - (2)].a)); ;}
     break;
 
   case 26:
@@ -1715,6 +1708,13 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 134 "test.y"
     { (yyval.a) = newast('!', (yyvsp[(2) - (2)].a), NULL);  ;}
+    break;
+
+  case 46:
+
+/* Line 1455 of yacc.c  */
+#line 138 "test.y"
+    { (yyval.a) = newEpsilon(); ;}
     break;
 
 

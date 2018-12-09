@@ -29,7 +29,7 @@
 
 %type <a> compound_statement procedure_statement actural_parameter_expression 
 %type <a> print_statement expression_list simple_expression expression statement_list
-%type <a> statement variable term factor declarations type
+%type <a> statement variable term factor declarations type epsilon
 
 %type <f_list> identifier_list
 
@@ -52,12 +52,12 @@ pr:
 
 declarations:
         VAR identifier_list ':' type ';' declarations { $$ = newidentifier((struct fixsymlist*)$2, $4, $6); }
-        | epsilon       { $$ = newEpsilon(); }
+        | epsilon
         ;
 
 identifier_list:
-        ID      { $$ = newfixsymlist((struct symbol*)newref($1),NULL); }
-        | ID ';' identifier_list   { $$ = newfixsymlist((struct symbol*)newref($1), $3); }
+        ID      { $$ = newfixsymlist((struct symref*)newref($1),NULL); }
+        | ID ';' identifier_list   { $$ = newfixsymlist((struct symref*)newref($1), $3); }
         ;
 
 type:
@@ -82,14 +82,14 @@ statement:
     | print_statement    		        { $$ = $1; }
     | procedure_statement                  	{ $$ = $1; }
     | compound_statement                        { $$ = $1; }
-    | variable '=' expression      	        { $$ = newasgn((struct symref*)$1, $3); printf("val->S : %d\n",((struct symref*)$1)->s) ;}
+    | variable '=' expression      	        { $$ = newasgn((struct symref*)$1, $3); }
     | WHILE '(' expression ')' statement            { $$ = newflow('W', $3, $5, NULL);  }
     | IF  expression THEN statement ELSE statement  { $$ = newflow('I', $2, $4, $6);    }
     | NOP                                       { $$ = newast('X', NULL, NULL); }
     ;
 print_statement:
     PRINT   { $$ = newfunc($1, NULL); }
-    | PRINT expression    { $$ = newfunc($1, $2); printf("print exp->s : %d\n",((struct symref*)$2)->s);}
+    | PRINT expression    { $$ = newfunc($1, $2); }
     ;
 
 variable:
@@ -135,7 +135,7 @@ factor:
     ;
     
 epsilon:
-        ;
+        { $$ = newEpsilon(); };
 
 %%
 

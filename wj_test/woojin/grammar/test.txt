@@ -1,3 +1,9 @@
+var id1; id2 : int;
+begin
+id1 = 1;
+id2 = 3.4;
+print id1 + id2
+end
 /*
 begin
 num1 = 1;
@@ -15,7 +21,7 @@ while(num1 < 10)
 print num1
 end
 */
-
+/*
 begin
 num1 = 1;
 num2 = 2.0;
@@ -39,3 +45,4 @@ while(num1 < 10)
 print num1;
 print 50
 end
+*/
