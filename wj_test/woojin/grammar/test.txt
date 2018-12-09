@@ -1,0 +1,48 @@
+var id1; id2 : int;
+begin
+id1 = 1;
+id2 = 3.4;
+print id1 + id2
+end
+/*
+begin
+num1 = 1;
+num2 = 2.0;
+print num1;
+print num2;
+
+num1 = num1 + 1;
+num3 = num1*num2;
+if num1 < num3 then num1 = num1 + 1 else print num1;
+print num3;
+print num1;
+while(num1 < 10)
+    num1 = num1 + 1;
+print num1
+end
+*/
+/*
+begin
+num1 = 1;
+num2 = 2.0;
+num3 = 3.5;
+print num1;
+print num2;
+print num3;
+
+num4 = num1*num2;
+print num4;
+print num2*-num3;
+
+num1 = num1 + 1;
+print num1;
+if num1 < num3 then num1 = num1 + 1 else print num1;
+print num1;
+print 40;
+
+while(num1 < 10)
+    num1 = num1 + 1;
+print num1;
+print 50
+end
+*/
