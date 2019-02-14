@@ -1,2 +1,2 @@
-# CAU_SimplePythonInterpreter
-CAU_SimplePythonInterpreter
+# SimpleInterpreter
+SimpleInterpreter
